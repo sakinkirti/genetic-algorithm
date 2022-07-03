@@ -30,7 +30,7 @@ def main():
 
     for i in range(10000):
         if i % lifespan == 0:
-            population = Population(window, top_mice, lifespan, population_size=100)
+            population = Population(window, top_mice, lifespan, population_size=20)
             population.start(window)
 
         top_mice = population.display(window)
