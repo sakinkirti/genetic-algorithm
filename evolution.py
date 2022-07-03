@@ -25,15 +25,15 @@ def main():
 
     # create objects
     cheese = Cheese(window); cheese.start(window)
-    lifespan = 20
+    lifespan = 100
     top_mice = []
 
     for i in range(10000):
         if i % lifespan == 0:
-            population = Population(window, top_mice, lifespan, population_size=10)
+            population = Population(window, top_mice, lifespan, population_size=100)
             population.start(window)
 
-        population.display(window, bounding_box)
+        top_mice = population.display(window)
 
     window.getMouse()
     window.close()

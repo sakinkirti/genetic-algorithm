@@ -27,18 +27,18 @@ class Population:
         else:
             for i in range(self.population_size):
                 partners = [top_mice[random.randint(0, len(top_mice)-1)], top_mice[random.randint(0, len(top_mice)-1)]]
-                self.mice.append(Mouse(lifespan, pos_x=window.getWidth()/2, pos_y=window.getHeight()*0.90), partners)
+                self.mice.append(Mouse(lifespan, pos_x=window.getWidth()/2, pos_y=window.getHeight()*0.90, top_mice=partners))
 
     '''
     show the mice to the display
     '''
-    def display(self, window, bounding_box):
+    def display(self, window):
         flag = ''
         top_mice = []
 
         # iterate and update weights
         for mouse in self.mice:
-            mouse.update_weights(bounding_box)
+            mouse.update_weights()
             flag = mouse.show(window)
 
         # if the flag is raised, isolate the top 25% of mice

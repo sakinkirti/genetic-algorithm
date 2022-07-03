@@ -43,28 +43,16 @@ class Mouse:
     '''
     apply a force to the acceleration value
     '''
-    def add_force(self, bounding_box, force=[0, 0]):
-        # set the x acceleration
-        if self.position[x] >= bounding_box.getP2().getX() and force[x] > 0:
-            self.acceleration[x] -= force[x]
-        elif self.position[x] <= bounding_box.getP1().getX() and force[x] < 0:
-            self.acceleration[x] -= force[x]
-        else:
-            self.acceleration[x] += force[x]
-
-        # set the y acceleration
-        if self.position[y] >= bounding_box.getP2().getY() and force[y] >= 0:
-            self.acceleration[y] -= force[y]
-        elif self.position[y] <= bounding_box.getP1().getY() and force[y] <= 0:
-            self.acceleration[y] -= force[y]
-        else:
-            self.acceleration[y] += force[y]
+    def add_force(self, force=[0, 0]):
+        # set the acceleration
+        self.acceleration[x] += force[x]
+        self.acceleration[y] += force[y]
 
     '''
     update the mouse based on the new acceleration value
     '''
-    def update_weights(self, bounding_box):
-        self.add_force(bounding_box, self.DNA.genes[self.counter])
+    def update_weights(self):
+        self.add_force(self.DNA.genes[self.counter])
         self.counter += 1
 
         self.velocity[x] += self.acceleration[x]
@@ -81,12 +69,11 @@ class Mouse:
     def show(self, window):
         self.mouse_display.move(self.velocity[x], self.velocity[y])
 
-        self.velocity[x] *= 0.5 # reset velocity after moving
-        self.velocity[y] *= 0.5
+        self.velocity[x] *= 0 # reset velocity after moving
+        self.velocity[y] *= 0
 
         if self.lifespan == self.counter:
-            self.mouse_display.setFill(color='dark gray')
-            self.mouse_display.setOutline(color='dark gray')
+            self.mouse_display.undraw()
 
             self.cheese_to_pos = self.cheese_distance([window.getWidth()/2, window.getHeight()*0.1])
             return 'raised'
@@ -103,12 +90,8 @@ class Mouse:
     calculate distance from mice
     '''
     def cheese_distance(self, cheese_position):
-        # unpack
-        cheese_x = cheese_position[0]
-        cheese_y = cheese_position[1]
-
         # euclidean distance
-        return math.sqrt( ((cheese_x - self.position[x])**2) + ((cheese_y - self.position[y])**2) )
+        return math.sqrt( ((cheese_position[x] - self.position[x])**2) + ((cheese_position[y] - self.position[y])**2) )
 
     def calc_fitness(self, cheese_position):
         # distance

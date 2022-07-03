@@ -34,11 +34,12 @@ class DNA:
     '''
     def reproduce(self, top_mice):
         # unpack
-        male, female = top_mice
+        top_mice_DNA = [mouse.DNA.genes for mouse in top_mice]
+        male, female = top_mice_DNA
 
         # iterate through top_mouse and set self.genes to something similar
         gamete = self.generate_gamete(male, female)
-        # gamete = self.mutate(gamete)
+        gamete = self.mutate(gamete)
         self.genes = gamete
 
     '''
@@ -55,8 +56,8 @@ class DNA:
         # splice genes
         for i in range(num_events):
             temp = male[locs[i]:]
-            male = male[:locs[i]] + female[locs[i]:]
-            female = female[:locs[i]] + temp
+            male = female[locs[i]:] + male[:locs[i]]
+            female = temp + female[:locs[i]]
 
         # return one of the gametes
         if num_events % 2 == 0:
@@ -70,7 +71,7 @@ class DNA:
     def mutate(self, gamete):
         # iterate through the genes and introduce some slight variation
         for nucleotide in gamete:
-            nucleotide[x] += random.random() * 10 - 5
-            nucleotide[y] += random.random() * 10 - 5
+            nucleotide[x] += random.random() * 2 - 1
+            nucleotide[y] += random.random() * 2 - 1
 
         return gamete
