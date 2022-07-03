@@ -15,3 +15,8 @@ Is paired with a short demonstration when running evolution.py <br>
 ## Additional Files
 - `graphics.py` contains the graphics methods to used to create this project: Young, Daniel. Python Programming: Introduction to Computer Science. 2018. 2022. GitHub, https://github.com/drypycode/zelle-python/blob/ccd781784bf2a635d1f6e84ec2173d2ae7d50098/graphics.py.
 
+## TO DO
+- [ ] improve algorithm so that mice eventually converge to find a best path
+- [ ] remove additional methods that are not needed
+- [ ] improve graphics by adding trailing lines
+
